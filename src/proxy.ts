@@ -21,15 +21,14 @@ async function isAuthenticated(token: string | undefined): Promise<boolean> {
   }
 }
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const country =
     req.headers.get("x-vercel-ip-country") ??
     req.headers.get("cf-ipcountry") ??
     "US";
 
-  const isAdminPage =
-    pathname === "/admin" || pathname.startsWith("/admin/");
+  const isAdminPage = pathname === "/admin" || pathname.startsWith("/admin/");
   const isAdminLogin = pathname === "/admin/login";
   const isProtectedApi =
     pathname.startsWith("/api/import") ||
