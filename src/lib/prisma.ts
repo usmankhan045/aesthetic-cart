@@ -2,6 +2,9 @@ import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+const missingEnvError = new Error(
+  "DATABASE_URL is not configured. Set it in your environment (e.g. Vercel) and run migrations/seed as needed."
+);
 
 function isConfigured(url: string | undefined): url is string {
   if (!url) return false;
@@ -9,19 +12,27 @@ function isConfigured(url: string | undefined): url is string {
   return url.startsWith("postgres://") || url.startsWith("postgresql://");
 }
 
-function createPrismaClient(): PrismaClient {
+function createPrismaClient(): PrismaClient | null {
   const connectionString = process.env.DATABASE_URL;
   if (!isConfigured(connectionString)) {
-    throw new Error(
-      "DATABASE_URL is not configured. Edit .env.local with your Neon connection string, then run `npx prisma db push` and restart the dev server."
-    );
+    return null;
   }
   const adapter = new PrismaNeon({ connectionString });
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+const prismaInstance = globalForPrisma.prisma ?? createPrismaClient();
+const missingPrismaProxy = new Proxy(
+  {},
+  {
+    get() {
+      throw missingEnvError;
+    },
+  }
+) as PrismaClient;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+export const prisma = prismaInstance ?? missingPrismaProxy;
+
+if (process.env.NODE_ENV !== "production" && prismaInstance) {
+  globalForPrisma.prisma = prismaInstance;
 }
