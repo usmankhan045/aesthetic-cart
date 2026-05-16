@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette */
-  --color-cream: #FDFBF7;
-  --color-blush: #FFF0F1;
-  --color-rose: #F9D5D8;
-  --color-rose-gold: #B76E79;
-  --color-rose-gold-light: #D4959E;
-  --color-rose-gold-dark: #8E4F59;
-  --color-charcoal: #1A1A1A;
-  --color-warm-gray: #8C7B75;
-  --color-warm-gray-light: #C4B5B0;
-  --color-ivory: #FAF8F5;
-  --color-petal: #F2C4CA;
-  --color-mist: #F7F3F0;
+  /* Brand palette — warm, dusty, sophisticated */
+  --color-cream: #FBF6F0;
+  --color-blush: #FCE7E1;
+  --color-rose: #F4C4BF;
+  --color-petal: #EDB1AC;
+  --color-rose-gold: #C18579;
+  --color-rose-gold-light: #DDA9A0;
+  --color-rose-gold-dark: #9B5F54;
+  --color-charcoal: #2A2422;
+  --color-warm-gray: #968178;
+  --color-warm-gray-light: #C7B8B0;
+  --color-ivory: #F6F0E8;
+  --color-mist: #F2EAE2;
+  --color-sand: #EEE2D5;
 
   /* Typography */
   --font-serif: var(--font-serif-google), "Cormorant Garamond", "Georgia", serif;
@@ -25,10 +26,10 @@
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
 
-  /* Shadows */
-  --shadow-soft: 0 2px 20px 0 rgba(183, 110, 121, 0.08);
-  --shadow-card: 0 4px 32px 0 rgba(26, 26, 26, 0.06);
-  --shadow-hover: 0 8px 40px 0 rgba(183, 110, 121, 0.16);
+  /* Shadows — warm, layered */
+  --shadow-soft: 0 2px 24px 0 rgba(193, 133, 121, 0.10);
+  --shadow-card: 0 4px 32px 0 rgba(42, 36, 34, 0.06);
+  --shadow-hover: 0 12px 48px 0 rgba(193, 133, 121, 0.20);
 }
 
 /* Base resets */

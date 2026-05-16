@@ -19,7 +19,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       href={`/products/${product.slug}`}
       className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-rose-gold/10 hover:border-rose-gold/40 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)] transition-all duration-500"
     >
-      <div className="relative aspect-square bg-mist overflow-hidden">
+      <div className="relative aspect-square bg-gradient-to-br from-mist via-cream to-blush/50 overflow-hidden">
         {image ? (
           <Image
             src={image}
@@ -33,7 +33,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <div className="absolute inset-0 bg-blush" />
         )}
         {product.categoryName && (
-          <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-cream/90 backdrop-blur-sm text-[10px] uppercase tracking-[0.2em] text-rose-gold-dark font-sans border border-rose-gold/20">
+          <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-cream/95 backdrop-blur-sm text-[10px] uppercase tracking-[0.2em] text-rose-gold-dark font-sans border border-rose-gold/20 shadow-sm">
             {product.categoryName}
           </span>
         )}

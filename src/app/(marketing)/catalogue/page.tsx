@@ -64,8 +64,12 @@ export default async function CataloguePage({ searchParams }: PageProps) {
 
   return (
     <div className="bg-cream min-h-screen">
-      <header className="bg-gradient-to-b from-blush/40 to-cream pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
+      <header className="relative overflow-hidden bg-gradient-to-br from-cream via-blush/60 to-rose/30 pt-24 pb-16">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-rose/30 blur-3xl opacity-60" />
+          <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-petal/40 blur-3xl opacity-50" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 text-center">
           <BowAccent className="w-14 h-7 mx-auto mb-6 opacity-60" />
           <p className="font-sans text-xs uppercase tracking-[0.4em] text-rose-gold mb-4">
             {activeCategory ? "Category" : "The full edit"}

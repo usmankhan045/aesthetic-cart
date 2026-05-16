@@ -4,10 +4,11 @@ import { BowAccent } from "@/components/ui/BowAccent";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-cream via-blush/40 to-rose/20 pt-24 pb-32 lg:pt-32 lg:pb-40">
+    <section className="relative overflow-hidden bg-gradient-to-br from-cream via-blush/60 to-rose/30 pt-24 pb-32 lg:pt-32 lg:pb-40">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-rose/30 blur-3xl opacity-60" />
-        <div className="absolute -bottom-32 -right-20 w-[28rem] h-[28rem] rounded-full bg-petal/40 blur-3xl opacity-50" />
+        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-rose/40 blur-3xl opacity-70" />
+        <div className="absolute -bottom-32 -right-20 w-[28rem] h-[28rem] rounded-full bg-petal/50 blur-3xl opacity-60" />
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-sand/40 blur-3xl opacity-50" />
       </div>
 
       <div className="relative max-w-5xl mx-auto px-6 lg:px-10 text-center">
