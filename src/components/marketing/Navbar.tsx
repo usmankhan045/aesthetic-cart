@@ -25,22 +25,6 @@ export function Navbar() {
               Catalogue
             </Link>
           </li>
-          <li>
-            <Link
-              href="/catalogue?category=vanity-essentials"
-              className="hover:text-rose-gold transition-colors"
-            >
-              Vanity
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/catalogue?category=desk-aesthetic"
-              className="hover:text-rose-gold transition-colors"
-            >
-              Desk
-            </Link>
-          </li>
         </ul>
         <Link
           href="/catalogue"
