@@ -12,23 +12,35 @@ interface CategoriesNavProps {
 export function CategoriesNav({ categories }: CategoriesNavProps) {
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
+  const ticking = useRef(false);
 
   useEffect(() => {
     if (categories.length === 0) return;
 
-    function onScroll() {
+    function update() {
       const y = window.scrollY;
-      if (y < 80) {
+      const delta = y - lastY.current;
+
+      if (y < 100) {
         setHidden(false);
-      } else if (y > lastY.current + 4) {
+      } else if (delta > 10) {
         setHidden(true);
-      } else if (y < lastY.current - 4) {
+      } else if (delta < -10) {
         setHidden(false);
       }
+
       lastY.current = y;
+      ticking.current = false;
     }
 
-    onScroll();
+    function onScroll() {
+      if (!ticking.current) {
+        ticking.current = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+
+    lastY.current = window.scrollY;
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [categories.length]);
@@ -38,10 +50,8 @@ export function CategoriesNav({ categories }: CategoriesNavProps) {
   return (
     <div
       className={cn(
-        "border-t border-rose-gold/10 bg-cream/60 overflow-hidden transition-all duration-300 ease-out",
-        hidden
-          ? "max-h-0 opacity-0 -translate-y-2 pointer-events-none"
-          : "max-h-20 opacity-100 translate-y-0"
+        "sticky top-16 sm:top-20 z-30 bg-cream/85 backdrop-blur-md border-b border-rose-gold/10 transition-transform duration-300 ease-out will-change-transform",
+        hidden ? "-translate-y-full" : "translate-y-0"
       )}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-10">
