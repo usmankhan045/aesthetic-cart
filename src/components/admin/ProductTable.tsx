@@ -45,6 +45,23 @@ export function ProductTable({ products: initial }: ProductTableProps) {
     }
   }
 
+  async function refresh(p: AdminProduct) {
+    setBusyId(p.id);
+    try {
+      const res = await fetch(`/api/products/${p.id}/refresh`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(`Refresh failed: ${data.error}`);
+      } else {
+        router.refresh();
+      }
+    } finally {
+      setBusyId(null);
+    }
+  }
+
   async function remove(p: AdminProduct) {
     if (!confirm(`Delete "${p.title}"?`)) return;
     setBusyId(p.id);
@@ -100,6 +117,14 @@ export function ProductTable({ products: initial }: ProductTableProps) {
                 </p>
               </div>
               <div className="flex items-center gap-3">
+                <button
+                  onClick={() => refresh(p)}
+                  disabled={busyId === p.id}
+                  title="Re-scrape from Amazon"
+                  className="text-xs uppercase tracking-[0.2em] text-warm-gray hover:text-rose-gold-dark transition-colors font-sans opacity-0 group-hover:opacity-100"
+                >
+                  {busyId === p.id ? "…" : "Sync"}
+                </button>
                 <button
                   onClick={() => togglePublished(p)}
                   disabled={busyId === p.id}

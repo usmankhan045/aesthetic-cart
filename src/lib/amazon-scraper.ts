@@ -167,17 +167,33 @@ function parseReviews($: cheerio.CheerioAPI): AmazonReview[] {
 }
 
 function parsePrice($: cheerio.CheerioAPI): string | null {
+  const currencyRegex = /[\$£€¥₹₩₪₱฿₺R]/;
   const selectors = [
+    "#corePriceDisplay_desktop_feature_div .a-price .a-offscreen",
+    "#corePrice_feature_div .a-price .a-offscreen",
+    "#corePrice_desktop .a-price .a-offscreen",
+    ".apexPriceToPay .a-offscreen",
+    ".priceToPay .a-offscreen",
+    'span[data-a-color="price"] .a-offscreen',
     ".a-price .a-offscreen",
     "#priceblock_ourprice",
     "#priceblock_dealprice",
-    ".a-price-whole",
-    'span[data-a-color="price"] .a-offscreen',
+    "#priceblock_saleprice",
+    "#newBuyBoxPrice",
+    "#price_inside_buybox",
   ];
   for (const sel of selectors) {
     const text = $(sel).first().text().trim();
-    if (text) return text;
+    if (text && currencyRegex.test(text)) return text;
   }
+
+  const symbol = $(".a-price-symbol").first().text().trim() || "$";
+  const whole = $(".a-price-whole").first().text().trim().replace(/[.,]\s*$/, "");
+  const fraction = $(".a-price-fraction").first().text().trim();
+  if (whole) {
+    return fraction ? `${symbol}${whole}.${fraction}` : `${symbol}${whole}`;
+  }
+
   return null;
 }
 

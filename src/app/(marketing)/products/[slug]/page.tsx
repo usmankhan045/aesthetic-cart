@@ -9,6 +9,7 @@ import { StarRating } from "@/components/ui/StarRating";
 import { ButtonLink } from "@/components/ui/Button";
 import { BowAccent } from "@/components/ui/BowAccent";
 import { buildAffiliateUrl, getUserCountry, countryLabel } from "@/lib/geo";
+import { getProductBySlug, getRelatedProducts } from "@/lib/data";
 import {
   generateProductSchema,
   generateBreadcrumbSchema,
@@ -25,6 +26,18 @@ interface PageProps {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
+function timeAgo(date: Date): string {
+  const diff = Date.now() - new Date(date).getTime();
+  const hours = Math.floor(diff / 3_600_000);
+  if (hours < 1) return "just now";
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  const weeks = Math.floor(days / 7);
+  if (weeks < 4) return `${weeks}w ago`;
+  return `${Math.floor(days / 30)}mo ago`;
+}
+
 export async function generateStaticParams() {
   try {
     const products = await prisma.product.findMany({
@@ -37,22 +50,11 @@ export async function generateStaticParams() {
   }
 }
 
-async function getProduct(slug: string) {
-  try {
-    return await prisma.product.findUnique({
-      where: { slug },
-      include: { category: true },
-    });
-  } catch {
-    return null;
-  }
-}
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: "Product not found" };
 
   const description =
@@ -74,27 +76,16 @@ export async function generateMetadata({
 
 export default async function ProductDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = await getProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product || !product.published) notFound();
 
-  const country = await getUserCountry();
+  const [country, related] = await Promise.all([
+    getUserCountry(),
+    getRelatedProducts(product.categoryId, product.id),
+  ]);
+
   const affiliateUrl = buildAffiliateUrl(product.asin, country);
   const productUrl = `${SITE_URL}/products/${product.slug}`;
-
-  let related: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
-  try {
-    related = await prisma.product.findMany({
-      where: {
-        categoryId: product.categoryId,
-        published: true,
-        id: { not: product.id },
-      },
-      take: 4,
-      orderBy: { createdAt: "desc" },
-    });
-  } catch {
-    // related products unavailable — degrade gracefully
-  }
 
   const reviews: AmazonReview[] = Array.isArray(product.reviews)
     ? (product.reviews as unknown as AmazonReview[])
@@ -170,12 +161,29 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </h1>
 
             {product.rating && (
-              <div className="mb-8">
+              <div className="mb-6">
                 <StarRating
                   rating={product.rating}
                   reviewCount={product.reviewCount}
                   size="md"
                 />
+              </div>
+            )}
+
+            {product.price && (
+              <div className="mb-8 pb-8 border-b border-rose-gold/15">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-warm-gray font-sans mb-2">
+                  Current price
+                </p>
+                <div className="flex items-baseline gap-3">
+                  <span className="font-serif text-4xl text-charcoal">
+                    {product.price}
+                  </span>
+                  <span className="text-xs text-warm-gray font-sans italic">
+                    on Amazon · synced{" "}
+                    {timeAgo(product.updatedAt)}
+                  </span>
+                </div>
               </div>
             )}
 
@@ -209,15 +217,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 size="lg"
                 className="w-full"
               >
-                Buy on Amazon
-                {product.price && (
-                  <span className="ml-3 opacity-80 normal-case tracking-normal">
-                    · {product.price}
-                  </span>
-                )}
+                Buy Now
               </ButtonLink>
               <p className="text-center text-[10px] uppercase tracking-[0.3em] text-warm-gray/70 font-sans">
-                Redirecting to amazon · {countryLabel(country)}
+                Secure checkout via amazon · {countryLabel(country)}
               </p>
             </div>
           </div>
