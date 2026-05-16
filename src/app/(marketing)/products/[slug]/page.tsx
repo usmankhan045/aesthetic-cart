@@ -140,47 +140,47 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <ProductGallery images={product.imageUrls} title={product.title} />
 
           <div className="lg:py-4">
-            <p className="font-sans text-[10px] sm:text-xs uppercase tracking-[0.4em] text-rose-gold mb-3 sm:mb-4">
+            <p className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-rose-gold mb-3 sm:mb-4">
               {product.category.emoji} {product.category.name}
             </p>
 
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal leading-tight mb-4 sm:mb-6">
+            <h1 className="font-serif text-2xl sm:text-3xl lg:text-[2rem] text-charcoal leading-snug mb-4 sm:mb-5">
               {product.title}
             </h1>
 
             {product.rating && (
-              <div className="mb-5 sm:mb-6">
+              <div className="mb-5">
                 <StarRating
                   rating={product.rating}
                   reviewCount={product.reviewCount}
-                  size="md"
+                  size="sm"
                 />
               </div>
             )}
 
             {product.price && (
-              <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-rose-gold/15">
+              <div className="mb-6 sm:mb-7 pb-6 sm:pb-7 border-b border-rose-gold/15">
                 <p className="text-[10px] uppercase tracking-[0.3em] text-warm-gray font-sans mb-2">
                   Current price
                 </p>
-                <span className="font-serif text-3xl sm:text-4xl text-charcoal">
+                <span className="font-serif text-2xl sm:text-3xl text-charcoal">
                   {product.price}
                 </span>
               </div>
             )}
 
-            <p className="font-serif italic text-base sm:text-lg text-warm-gray leading-relaxed mb-6 sm:mb-8 line-clamp-4">
+            <p className="font-serif italic text-sm sm:text-base text-warm-gray leading-relaxed mb-6 sm:mb-7 line-clamp-4">
               {product.description}
             </p>
 
             {product.bullets.length > 0 && (
-              <ul className="space-y-3 mb-8 sm:mb-10 pb-8 sm:pb-10 border-b border-rose-gold/10">
+              <ul className="space-y-2.5 mb-7 sm:mb-8 pb-7 sm:pb-8 border-b border-rose-gold/10">
                 {product.bullets.slice(0, 6).map((bullet, i) => (
                   <li
                     key={i}
-                    className="flex gap-3 text-charcoal/90 font-sans text-sm leading-relaxed"
+                    className="flex gap-3 text-charcoal/85 font-sans text-[13px] sm:text-sm leading-relaxed"
                   >
-                    <span className="text-rose-gold mt-1.5 flex-shrink-0">
+                    <span className="text-rose-gold mt-2 flex-shrink-0">
                       <svg viewBox="0 0 8 8" className="w-1.5 h-1.5 fill-current">
                         <circle cx="4" cy="4" r="4" />
                       </svg>

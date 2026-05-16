@@ -22,6 +22,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB unavailable at build — return minimal sitemap
   }
 
+  const legalPages = [
+    "/privacy",
+    "/terms",
+    "/affiliate-disclosure",
+    "/cookies",
+  ];
+
   return [
     { url: BASE, lastModified: now, changeFrequency: "weekly", priority: 1 },
     {
@@ -41,6 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: p.updatedAt,
       changeFrequency: "weekly" as const,
       priority: 0.8,
+    })),
+    ...legalPages.map((path) => ({
+      url: `${BASE}${path}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
     })),
   ];
 }

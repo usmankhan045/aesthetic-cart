@@ -22,18 +22,58 @@ export function Footer() {
               Explore
             </h3>
             <ul className="space-y-3 text-sm text-warm-gray">
-              <li><Link href="/" className="hover:text-rose-gold transition-colors">Home</Link></li>
-              <li><Link href="/catalogue" className="hover:text-rose-gold transition-colors">Full Catalogue</Link></li>
+              <li>
+                <Link href="/" className="hover:text-rose-gold transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/catalogue"
+                  className="hover:text-rose-gold transition-colors"
+                >
+                  Full Catalogue
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <h3 className="font-sans text-xs uppercase tracking-[0.2em] text-charcoal mb-5">
-              About
+              Legal
             </h3>
             <ul className="space-y-3 text-sm text-warm-gray">
-              <li>Curated weekly</li>
-              <li>Independently selected</li>
-              <li>Affiliate disclosure</li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="hover:text-rose-gold transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="hover:text-rose-gold transition-colors"
+                >
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/affiliate-disclosure"
+                  className="hover:text-rose-gold transition-colors"
+                >
+                  Affiliate Disclosure
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cookies"
+                  className="hover:text-rose-gold transition-colors"
+                >
+                  Cookie Policy
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
