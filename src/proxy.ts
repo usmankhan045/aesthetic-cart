@@ -23,37 +23,47 @@ async function isAuthenticated(token: string | undefined): Promise<boolean> {
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const country =
-    req.headers.get("x-vercel-ip-country") ??
-    req.headers.get("cf-ipcountry") ??
-    "US";
 
-  const isAdminPage = pathname === "/admin" || pathname.startsWith("/admin/");
   const isAdminLogin = pathname === "/admin/login";
+  const isAdminPage =
+    !isAdminLogin && (pathname === "/admin" || pathname.startsWith("/admin/"));
   const isProtectedApi =
     pathname.startsWith("/api/import") ||
     pathname.startsWith("/api/categories") ||
     pathname.startsWith("/api/products");
+  const isProductPage = pathname.startsWith("/products/");
 
-  if ((isAdminPage && !isAdminLogin) || isProtectedApi) {
+  if (isAdminPage || isProtectedApi) {
     const token = req.cookies.get(ADMIN_COOKIE)?.value;
     const ok = await isAuthenticated(token);
     if (!ok) {
       if (isProtectedApi) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
-      const loginUrl = new URL("/admin/login", req.url);
-      return NextResponse.redirect(loginUrl);
+      return NextResponse.redirect(new URL("/admin/login", req.url));
     }
   }
 
-  const res = NextResponse.next();
-  res.headers.set("x-user-country", country);
-  return res;
+  if (isProductPage) {
+    const country =
+      req.headers.get("x-vercel-ip-country") ??
+      req.headers.get("cf-ipcountry") ??
+      "US";
+    const res = NextResponse.next();
+    res.headers.set("x-user-country", country);
+    return res;
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/admin",
+    "/admin/:path*",
+    "/api/import/:path*",
+    "/api/categories/:path*",
+    "/api/products/:path*",
+    "/products/:path*",
   ],
 };
