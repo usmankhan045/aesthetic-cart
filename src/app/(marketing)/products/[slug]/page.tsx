@@ -26,18 +26,6 @@ interface PageProps {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-function timeAgo(date: Date): string {
-  const diff = Date.now() - new Date(date).getTime();
-  const hours = Math.floor(diff / 3_600_000);
-  if (hours < 1) return "just now";
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 7) return `${days}d ago`;
-  const weeks = Math.floor(days / 7);
-  if (weeks < 4) return `${weeks}w ago`;
-  return `${Math.floor(days / 30)}mo ago`;
-}
-
 export async function generateStaticParams() {
   try {
     const products = await prisma.product.findMany({
@@ -59,7 +47,7 @@ export async function generateMetadata({
 
   const description =
     product.description.slice(0, 160) ||
-    `${product.title} — curated by aestheticcart.`;
+    `${product.title}, curated by aestheticcart.`;
 
   return {
     title: product.title,
@@ -131,37 +119,37 @@ export default async function ProductDetailPage({ params }: PageProps) {
         />
       )}
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pt-6 sm:pt-10">
         <nav
-          className="flex items-center gap-2 text-xs font-sans uppercase tracking-[0.2em] text-warm-gray mb-10"
+          className="flex items-center gap-2 text-[10px] sm:text-xs font-sans uppercase tracking-[0.18em] sm:tracking-[0.2em] text-warm-gray mb-6 sm:mb-10 overflow-x-auto whitespace-nowrap"
           aria-label="Breadcrumb"
         >
-          <Link href="/" className="hover:text-rose-gold">Home</Link>
+          <Link href="/" className="hover:text-rose-gold shrink-0">Home</Link>
           <span>/</span>
-          <Link href="/catalogue" className="hover:text-rose-gold">Catalogue</Link>
+          <Link href="/catalogue" className="hover:text-rose-gold shrink-0">Catalogue</Link>
           <span>/</span>
           <Link
             href={`/catalogue?category=${product.category.slug}`}
-            className="hover:text-rose-gold"
+            className="hover:text-rose-gold shrink-0"
           >
             {product.category.name}
           </Link>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
           <ProductGallery images={product.imageUrls} title={product.title} />
 
           <div className="lg:py-4">
-            <p className="font-sans text-xs uppercase tracking-[0.4em] text-rose-gold mb-4">
+            <p className="font-sans text-[10px] sm:text-xs uppercase tracking-[0.4em] text-rose-gold mb-3 sm:mb-4">
               {product.category.emoji} {product.category.name}
             </p>
 
-            <h1 className="font-serif text-4xl lg:text-5xl text-charcoal leading-tight mb-6">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal leading-tight mb-4 sm:mb-6">
               {product.title}
             </h1>
 
             {product.rating && (
-              <div className="mb-6">
+              <div className="mb-5 sm:mb-6">
                 <StarRating
                   rating={product.rating}
                   reviewCount={product.reviewCount}
@@ -171,28 +159,22 @@ export default async function ProductDetailPage({ params }: PageProps) {
             )}
 
             {product.price && (
-              <div className="mb-8 pb-8 border-b border-rose-gold/15">
+              <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-rose-gold/15">
                 <p className="text-[10px] uppercase tracking-[0.3em] text-warm-gray font-sans mb-2">
                   Current price
                 </p>
-                <div className="flex items-baseline gap-3">
-                  <span className="font-serif text-4xl text-charcoal">
-                    {product.price}
-                  </span>
-                  <span className="text-xs text-warm-gray font-sans italic">
-                    on Amazon · synced{" "}
-                    {timeAgo(product.updatedAt)}
-                  </span>
-                </div>
+                <span className="font-serif text-3xl sm:text-4xl text-charcoal">
+                  {product.price}
+                </span>
               </div>
             )}
 
-            <p className="font-serif italic text-lg text-warm-gray leading-relaxed mb-8 line-clamp-4">
+            <p className="font-serif italic text-base sm:text-lg text-warm-gray leading-relaxed mb-6 sm:mb-8 line-clamp-4">
               {product.description}
             </p>
 
             {product.bullets.length > 0 && (
-              <ul className="space-y-3 mb-10 pb-10 border-b border-rose-gold/10">
+              <ul className="space-y-3 mb-8 sm:mb-10 pb-8 sm:pb-10 border-b border-rose-gold/10">
                 {product.bullets.slice(0, 6).map((bullet, i) => (
                   <li
                     key={i}
@@ -227,17 +209,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
 
         {reviews.length > 0 && (
-          <section className="mt-24">
-            <div className="text-center mb-12">
-              <BowAccent className="w-12 h-6 mx-auto mb-5 opacity-60" />
-              <p className="font-sans text-xs uppercase tracking-[0.4em] text-rose-gold mb-3">
+          <section className="mt-16 sm:mt-24">
+            <div className="text-center mb-8 sm:mb-12">
+              <BowAccent className="w-10 sm:w-12 h-5 sm:h-6 mx-auto mb-4 sm:mb-5 opacity-60" />
+              <p className="font-sans text-[10px] sm:text-xs uppercase tracking-[0.4em] text-rose-gold mb-3">
                 What everyone&rsquo;s saying
               </p>
-              <h2 className="font-serif text-4xl text-charcoal">
+              <h2 className="font-serif text-3xl sm:text-4xl text-charcoal">
                 The reviews
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {reviews.slice(0, 4).map((r, i) => (
                 <ReviewCard key={i} review={r} />
               ))}

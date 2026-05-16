@@ -26,7 +26,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
       <div className="relative aspect-square bg-white rounded-2xl overflow-hidden border border-rose-gold/10 shadow-[var(--shadow-card)]">
         <Image
           src={safeImages[active]}
-          alt={`${title} — image ${active + 1}`}
+          alt={`${title}, image ${active + 1}`}
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-contain p-8"

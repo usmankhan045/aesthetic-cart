@@ -42,11 +42,11 @@ export function ImportForm({ categories }: ImportFormProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-8 border border-rose-gold/15 shadow-[var(--shadow-card)]">
-      <h2 className="font-serif text-3xl text-charcoal mb-2">
+    <div className="bg-white rounded-2xl p-5 sm:p-8 border border-rose-gold/15 shadow-[var(--shadow-card)]">
+      <h2 className="font-serif text-2xl sm:text-3xl text-charcoal mb-2">
         One-click Amazon import
       </h2>
-      <p className="font-serif italic text-warm-gray mb-6">
+      <p className="font-serif italic text-warm-gray text-sm sm:text-base mb-5 sm:mb-6">
         Paste an Amazon URL and we&rsquo;ll do the rest.
       </p>
 
@@ -76,7 +76,7 @@ export function ImportForm({ categories }: ImportFormProps) {
             className="w-full px-5 py-3 rounded-full border border-rose-gold/20 bg-cream/50 focus:outline-none focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/20 font-sans text-sm transition-all"
           >
             {categories.length === 0 ? (
-              <option value="">— No categories yet — create one first —</option>
+              <option value="">No categories yet, create one first</option>
             ) : (
               categories.map((c) => (
                 <option key={c.id} value={c.id}>

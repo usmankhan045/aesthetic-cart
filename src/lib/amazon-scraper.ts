@@ -43,7 +43,7 @@ async function fetchDirect(asin: string): Promise<string> {
   });
   if (!res.ok) {
     throw new Error(
-      `Amazon returned HTTP ${res.status} — likely bot detection. Set SCRAPING_API_KEY in .env.local for proxy fallback.`
+      `Amazon returned HTTP ${res.status}. Likely bot detection. Set SCRAPING_API_KEY in .env.local for proxy fallback.`
     );
   }
   return await res.text();
@@ -202,7 +202,7 @@ function parseHtml(html: string, asin: string): ScrapedProduct {
 
   const title = $("#productTitle").text().trim();
   if (!title) {
-    throw new Error("Could not parse product title — Amazon may have blocked the request");
+    throw new Error("Could not parse product title. Amazon may have blocked the request");
   }
 
   const bullets: string[] = [];
@@ -251,7 +251,7 @@ function parseHtml(html: string, asin: string): ScrapedProduct {
 export async function scrapeAmazonProduct(input: string): Promise<ScrapedProduct> {
   const asin = extractAsin(input);
   if (!asin) {
-    throw new Error("Invalid Amazon URL — could not extract ASIN");
+    throw new Error("Invalid Amazon URL. Could not extract ASIN");
   }
 
   let html: string | null = null;

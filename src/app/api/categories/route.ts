@@ -54,7 +54,7 @@ export async function DELETE(req: NextRequest) {
   const count = await prisma.product.count({ where: { categoryId: id } });
   if (count > 0) {
     return NextResponse.json(
-      { error: `Cannot delete — ${count} product(s) still in this category` },
+      { error: `Cannot delete. ${count} product(s) still in this category` },
       { status: 409 }
     );
   }

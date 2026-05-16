@@ -48,6 +48,7 @@ body {
   color: var(--color-charcoal);
   font-family: var(--font-sans);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* Elegant selection */

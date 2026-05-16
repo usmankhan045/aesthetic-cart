@@ -25,31 +25,31 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             src={image}
             alt={product.title}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-contain p-6 transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-contain p-3 sm:p-6 transition-transform duration-700 group-hover:scale-105"
             priority={priority}
           />
         ) : (
           <div className="absolute inset-0 bg-blush" />
         )}
         {product.categoryName && (
-          <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-cream/95 backdrop-blur-sm text-[10px] uppercase tracking-[0.2em] text-rose-gold-dark font-sans border border-rose-gold/20 shadow-sm">
+          <span className="absolute top-2 sm:top-4 left-2 sm:left-4 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-cream/95 backdrop-blur-sm text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-rose-gold-dark font-sans border border-rose-gold/20 shadow-sm">
             {product.categoryName}
           </span>
         )}
       </div>
 
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-serif text-xl text-charcoal line-clamp-2 mb-3 leading-snug group-hover:text-rose-gold transition-colors">
+      <div className="p-3 sm:p-6 flex flex-col flex-1">
+        <h3 className="font-serif text-base sm:text-xl text-charcoal line-clamp-2 mb-2 sm:mb-3 leading-snug group-hover:text-rose-gold transition-colors">
           {product.title}
         </h3>
-        <div className="mt-auto flex items-end justify-between">
+        <div className="mt-auto flex items-end justify-between gap-2">
           <StarRating
             rating={product.rating}
             reviewCount={product.reviewCount}
             size="sm"
           />
-          <span className="text-xs uppercase tracking-[0.2em] text-rose-gold font-sans border-b border-rose-gold/40 pb-0.5 group-hover:text-rose-gold-dark group-hover:border-rose-gold transition-colors">
+          <span className="hidden sm:inline text-xs uppercase tracking-[0.2em] text-rose-gold font-sans border-b border-rose-gold/40 pb-0.5 group-hover:text-rose-gold-dark group-hover:border-rose-gold transition-colors whitespace-nowrap">
             View →
           </span>
         </div>

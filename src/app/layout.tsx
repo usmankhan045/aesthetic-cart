@@ -24,13 +24,13 @@ const SITE_NAME = "aestheticcart";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "aestheticcart — Curated aesthetic finds for her",
+    default: "aestheticcart · Curated aesthetic finds for her",
     template: "%s · aestheticcart",
   },
   description:
     "A quietly curated edit of the prettiest, most useful pieces for the girl who has taste. Clean Girl meets Coquette, hand-picked weekly.",
   openGraph: {
-    title: "aestheticcart — Curated aesthetic finds for her",
+    title: "aestheticcart · Curated aesthetic finds for her",
     description:
       "A quietly curated edit of the prettiest, most useful pieces for the girl who has taste.",
     type: "website",
@@ -38,6 +38,12 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
   },
   robots: { index: true, follow: true },
+};
+
+export const viewport = {
+  themeColor: "#FFF8F5",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

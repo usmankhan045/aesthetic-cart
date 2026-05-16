@@ -59,31 +59,33 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-8 border border-rose-gold/15 shadow-[var(--shadow-card)]">
-      <h2 className="font-serif text-3xl text-charcoal mb-2">Categories</h2>
-      <p className="font-serif italic text-warm-gray mb-6">
+    <div className="bg-white rounded-2xl p-5 sm:p-8 border border-rose-gold/15 shadow-[var(--shadow-card)]">
+      <h2 className="font-serif text-2xl sm:text-3xl text-charcoal mb-2">Categories</h2>
+      <p className="font-serif italic text-warm-gray text-sm sm:text-base mb-5 sm:mb-6">
         Organize your edit into curated collections.
       </p>
 
-      <form onSubmit={handleAdd} className="flex flex-col sm:flex-row gap-3 mb-6">
-        <input
-          type="text"
-          value={emoji}
-          onChange={(e) => setEmoji(e.target.value)}
-          placeholder="🎀"
-          maxLength={2}
-          className="w-16 px-3 py-2.5 text-center rounded-full border border-rose-gold/20 bg-cream/50 focus:outline-none focus:border-rose-gold font-sans"
-        />
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Category name (e.g. Vanity Essentials)"
-          required
-          className="flex-1 px-5 py-2.5 rounded-full border border-rose-gold/20 bg-cream/50 focus:outline-none focus:border-rose-gold font-sans text-sm"
-        />
-        <Button type="submit" disabled={busy} size="sm">
-          Add
+      <form onSubmit={handleAdd} className="space-y-3 mb-6">
+        <div className="flex gap-3">
+          <input
+            type="text"
+            value={emoji}
+            onChange={(e) => setEmoji(e.target.value)}
+            placeholder="🎀"
+            maxLength={2}
+            className="w-14 px-2 py-2.5 text-center rounded-full border border-rose-gold/20 bg-cream/50 focus:outline-none focus:border-rose-gold font-sans flex-shrink-0"
+          />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Category name"
+            required
+            className="flex-1 min-w-0 px-5 py-2.5 rounded-full border border-rose-gold/20 bg-cream/50 focus:outline-none focus:border-rose-gold font-sans text-sm"
+          />
+        </div>
+        <Button type="submit" disabled={busy} size="sm" className="w-full">
+          Add category
         </Button>
       </form>
 
@@ -112,7 +114,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
               <button
                 onClick={() => handleDelete(c.id)}
                 disabled={busy}
-                className="text-xs uppercase tracking-[0.2em] text-warm-gray hover:text-rose-gold-dark transition-colors font-sans opacity-0 group-hover:opacity-100"
+                className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-warm-gray hover:text-rose-gold-dark transition-colors font-sans sm:opacity-0 sm:group-hover:opacity-100"
               >
                 Delete
               </button>

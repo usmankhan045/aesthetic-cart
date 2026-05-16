@@ -53,12 +53,12 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
-      <header className="mb-12">
-        <h1 className="font-serif text-5xl text-charcoal mb-2">
+    <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-8 sm:py-12">
+      <header className="mb-8 sm:mb-12">
+        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-2">
           The studio
         </h1>
-        <p className="font-serif italic text-warm-gray text-lg">
+        <p className="font-serif italic text-warm-gray text-base sm:text-lg">
           Curate, publish, and refine your edit.
         </p>
       </header>
@@ -77,12 +77,12 @@ export default async function AdminDashboardPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="lg:col-span-8 space-y-8">
           <ImportForm categories={categories} />
           <ProductTable products={products} />
         </div>
-        <div>
+        <div className="lg:col-span-4 lg:sticky lg:top-24">
           <CategoryManager initialCategories={categories} />
         </div>
       </div>
